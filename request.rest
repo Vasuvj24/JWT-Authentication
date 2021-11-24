@@ -1,0 +1,13 @@
+GET http://localhost:3000/add-id-pass 
+####
+# GET http://localhost:3000/find-id-pass
+####
+GET http://localhost:3000/login
+####
+POST http://localhost:3000/JWT  
+Content-Type: application/json 
+
+{
+    "UserName":"Vasuojojo",
+    "Password":"1234"
+} 
