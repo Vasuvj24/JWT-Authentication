@@ -1,0 +1,13 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Changes to be committed:
+#	modified:   majorServer.js
+#	modified:   request.rest
+#	modified:   users.js
+#
+# Untracked files:
+#	JWT-Authentication/
+#
