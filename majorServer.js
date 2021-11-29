@@ -5,56 +5,41 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const users = require('./users')
+const bcrypt = require('bcrypt');
 app.use(express.json());
+
 //connecting a database 
+
 mongoose.connect(process.env.REACT_APP_API_KEY, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((res) => {
         console.log("developed connection");
     }).catch(Error => {
         console.log(Error);
     }
-)
-//making functions
-let UserName,Password;
+    )
+
+//variable defination
+
+let userNameAuth, passwordAuth, accessToken;
+
 //server
 app.listen(3000);
-// app.get('/add-id-pass', (req, res) => {
-//     const idPass = new users({
-//         UserName: 'Vasudi5656',
-//         Password: 'vasudi18989'
-//     });
-//     idPass.save().then((result) => {
-//         res.send(result)
-//     }).catch((err) => console.log(err))
-// })
-// app.get('/login',random=async(req, res)=>{
-//     await users.find().then((results) => {
-//         results.forEach(each => {
-//             if (each.UserName === "Admin" && each.Password === "vasudi1") {
-//                 console.log("You are logged in");
-//                 UserName=each.UserName;
-//                 Password=each.Password;
-//             }
-//         })
-//     }).catch((err) => {
-//         console.log(err)
-//     })
-//     const presentAccessToken=jwt.sign({UserName,Password},process.env.REACT_APP_ACCESS_TOKEN);
-//     res.json(presentAccessToken)
-// })
-app.post('/JWT',(req,res)=>{
-    UserName=req.body.UserName
-    Password=req.body.Password
-    const presentAccessToken=jwt.sign({UserName,Password},process.env.REACT_APP_ACCESS_TOKEN);
-    const user = new users({
-    UserName:UserName,
-    Password:Password,
-    Token:presentAccessToken
-    })
-
-    user.save().then((result)=>{
-        res.send(result)
-    }).catch((err)=>{
-        console.log(err);
-    })
+//tries to register itself
+app.post('/user', async (req, res) => {
+    try {
+        // const salt = await bcrypt.genSalt()
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        // console.log(salt);
+        console.log(hashedPassword);
+        const idPass = new users({
+            userName: req.body.userName,
+            password: hashedPassword
+        });
+        idPass.save().then((result) => {
+            res.status(201).send(result)
+        }).catch((err) => console.log(err))
+    } catch {
+        res.status(500).send()
+    }
 })
+//logging in

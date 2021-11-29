@@ -1,13 +1,21 @@
-GET http://localhost:3000/add-id-pass 
-####
-# GET http://localhost:3000/find-id-pass
-####
-GET http://localhost:3000/login
-####
-POST http://localhost:3000/JWT  
-Content-Type: application/json 
+POST  http://localhost:3000/user 
+Content-Type: application/json
 
 {
-    "UserName":"Vasuojojo",
-    "Password":"1234"
-} 
+    "userName":"Admin",
+    "password":"admin1234"
+}
+####
+
+POST  http://localhost:4000/another-page
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZUF1dGgiOnsidXNlck5hbWVBdXRoIjoiQWRtaW4iLCJwYXNzd29yZEF1dGgiOiIkMmIkMTAkODh6a3pKTHdVZDFDdXhCNFZDL1N4dTN2UWFkN2ppQllFdHhEbVdUeXZEc01VU2VNc1RtOG0ifSwiaWF0IjoxNjM4MTg4ODYyLCJleHAiOjE2MzgxODg4ODJ9.5d0ZHTPyu_yYNXkcr1FEbBSqrFMj7TUJIkE6UUx_4So
+####
+POST  http://localhost:4000/user/login
+Content-Type: application/json
+
+{
+    "userName":"Admin",
+    "password":"admin1234"
+}
+####
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZUF1dGgiOnsidXNlck5hbWVBdXRoIjoiQWRtaW4iLCJwYXNzd29yZEF1dGgiOiIkMmIkMTAkODh6a3pKTHdVZDFDdXhCNFZDL1N4dTN2UWFkN2ppQllFdHhEbVdUeXZEc01VU2VNc1RtOG0ifSwiaWF0IjoxNjM4MTg4ODYyLCJleHAiOjE2MzgxODg4ODJ9.5d0ZHTPyu_yYNXkcr1FEbBSqrFMj7TUJIkE6UUx_4So
