@@ -10,11 +10,11 @@ POST http://localhost:4000/token
 Content-Type: application/json
 
 {
-    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZUF1dGgiOiJBZG1pbiIsInBhc3N3b3JkQXV0aCI6IiQyYiQxMCRCTXkyLmRCNVdZU2NaRmxyMXVBTlMuRG1hcWlpZEU3c2pWWDZESzI4Vklpdm5yNE1MRGJrMiIsImlhdCI6MTYzODg2MzQ2OH0.uRboW5FMGsjhzSTaI01AP3NQQIkqoUoHIRT98IJb794"
+    "token":""
 }
 ####
 POST  http://localhost:4000/another-page
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZUF1dGgiOiJBZG1pbiIsInBhc3N3b3JkQXV0aCI6IiQyYiQxMCRCTXkyLmRCNVdZU2NaRmxyMXVBTlMuRG1hcWlpZEU3c2pWWDZESzI4Vklpdm5yNE1MRGJrMiIsImlhdCI6MTYzODg2MzQ5MSwiZXhwIjoxNjM4ODYzNTExfQ.PgsdNYiWiV6Y3-Ioe6qcRg9H8aibelqpaJG8gOrzSPo
+Authorization: Bearer 
 ####
 POST  http://localhost:4000/user/login
 Content-Type: application/json
