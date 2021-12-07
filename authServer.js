@@ -4,8 +4,10 @@ const express = require('express');
 const app = express()
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
+const refreshT = require('./refreshToken')
 const users = require('./users')
 const bcrypt = require('bcrypt');
+const { response } = require('express');
 app.use(express.json());
 
 //connecting a database 
@@ -16,15 +18,7 @@ mongoose.connect(process.env.REACT_APP_API_KEY, { useNewUrlParser: true, useUnif
     }).catch(Error => {
         console.log(Error);
     }
-    )
-// mongoose.connect(process.env.REACT_APP_TOKEN_KEY,{useNewUrlParser:true , useUnifiedTopology:true})
-// .then((res)=>{
-//     console.log("developed connection 2");
-// }).catch((error)=>{
-//     console.log(error);
-// })
-//variable defination
-
+)
 let userNameAuth, passwordAuth, accessToken;
 
 //functions
@@ -48,13 +42,27 @@ function generateAccessToken(userNameAuth, passwordAuth) {
     return jwt.sign({ userNameAuth, passwordAuth }, process.env.REACT_APP_ACCESS_TOKEN, { expiresIn: '20s' })
 }
 //logging in
+//poking to the level and then we made it to the next
+//to verfy and then we did t jnow the managing it for them
+// app.post('./token',(req,res)=>)
+app.post('/token',(req,res)=>{
+    const refreshToken = req.body.token;
+    refreshT.find().then((result)=>{result.forEach(each=>{
+        if(each.refreshToken==refreshToken){
+            console.log("found it successfully");
+            const accessToken = generateAccessToken(userNameAuth,passwordAuth);
+            res.send({accessToken:accessToken})
+    }
+        else{res.send("could'nt find it");}
+    })}).catch(Err=>console.log(Err))
+})
 app.post('/user/login', async (req, res) => {
     // let userNameAuth,passwordAuth;   
     await users.find().then((result) => {
         result.forEach(each => {
             if (each.userName === req.body.userName) {
                 passwordAuth = each.password;
-                userNameAuth = each.userName;
+                userNameAuth = each.userName;   
             }
             else {
                 res.send('username field incorrect')
@@ -65,7 +73,12 @@ app.post('/user/login', async (req, res) => {
         if(await bcrypt.compare(req.body.password, passwordAuth)){ 
             accessToken = generateAccessToken({ userNameAuth, passwordAuth });
             refreshToken = jwt.sign({ userNameAuth, passwordAuth }, process.env.REACT_APP_ACCESS_TOKEN_REFRESH)
-            res.send("logged in Succesfully your id pass is correct "+accessToken+"         "+refreshToken)
+            const refresh = new refreshT({
+                refreshToken:refreshToken
+            })
+            refresh.save().then((result)=>{console.log("succesfull added")})
+            .catch(Error=>console.log(Error))
+            res.send({accessToken:accessToken,refreshToken:refreshToken})
         }
         else{ res.send("your password is wrong")}
         // res.send({ user: userNameAuth, pass: passwordAuth, at: accessToken, rt: refreshToken })

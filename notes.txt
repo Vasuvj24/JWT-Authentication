@@ -1,2 +1,2 @@
 --we can also make two servers here and then we can both on different servers like register on different server and login auth on different server
---we need to makea= different server so that security remains intact and then we need to have same secret key and the 
+--we need to make a different server so that security remains intact and then we need to have same secret key and the 
